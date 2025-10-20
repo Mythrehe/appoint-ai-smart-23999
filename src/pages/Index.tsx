@@ -1,16 +1,47 @@
-import { Calendar, Heart, Activity, ArrowRight, CheckCircle2, Users } from "lucide-react";
+import { Calendar, Heart, Activity, ArrowRight, CheckCircle2, Users, LogOut, LogIn } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Index = () => {
   const navigate = useNavigate();
+  const { user, userRole, signOut } = useAuth();
 
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="relative bg-gradient-hero text-primary-foreground">
         <div className="container mx-auto px-4 py-20 lg:py-32">
+          {user && (
+            <div className="absolute top-4 right-4 flex items-center gap-4">
+              <span className="text-white/90 text-sm">
+                Welcome, {user.user_metadata?.full_name || user.email}
+              </span>
+              <Button
+                variant="outline"
+                size="sm"
+                className="border-white/30 text-white hover:bg-white/10"
+                onClick={signOut}
+              >
+                <LogOut className="h-4 w-4 mr-2" />
+                Sign Out
+              </Button>
+            </div>
+          )}
+          {!user && (
+            <div className="absolute top-4 right-4">
+              <Button
+                variant="outline"
+                size="sm"
+                className="border-white/30 text-white hover:bg-white/10"
+                onClick={() => navigate("/auth")}
+              >
+                <LogIn className="h-4 w-4 mr-2" />
+                Sign In
+              </Button>
+            </div>
+          )}
           <div className="max-w-3xl animate-fade-in-up">
             <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight">
               Smart Appointment Scheduling for Modern Clinics
@@ -20,23 +51,63 @@ const Index = () => {
               Intelligent slot management with automatic notifications.
             </p>
             <div className="flex flex-wrap gap-4">
-              <Button
-                size="lg"
-                variant="secondary"
-                className="text-lg px-8"
-                onClick={() => navigate("/patient")}
-              >
-                Patient Portal
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="text-lg px-8 border-white/30 text-white hover:bg-white/10"
-                onClick={() => navigate("/doctor")}
-              >
-                Doctor Login
-              </Button>
+              {user ? (
+                <>
+                  {userRole === "patient" && (
+                    <Button
+                      size="lg"
+                      variant="secondary"
+                      className="text-lg px-8"
+                      onClick={() => navigate("/patient")}
+                    >
+                      My Dashboard
+                      <ArrowRight className="ml-2 h-5 w-5" />
+                    </Button>
+                  )}
+                  {userRole === "doctor" && (
+                    <Button
+                      size="lg"
+                      variant="secondary"
+                      className="text-lg px-8"
+                      onClick={() => navigate("/doctor")}
+                    >
+                      Doctor Dashboard
+                      <ArrowRight className="ml-2 h-5 w-5" />
+                    </Button>
+                  )}
+                  {userRole === "admin" && (
+                    <Button
+                      size="lg"
+                      variant="secondary"
+                      className="text-lg px-8"
+                      onClick={() => navigate("/admin")}
+                    >
+                      Admin Dashboard
+                      <ArrowRight className="ml-2 h-5 w-5" />
+                    </Button>
+                  )}
+                </>
+              ) : (
+                <>
+                  <Button
+                    size="lg"
+                    variant="secondary"
+                    className="text-lg px-8"
+                    onClick={() => navigate("/auth")}
+                  >
+                    Get Started
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="text-lg px-8 border-white/30 text-white hover:bg-white/10"
+                    onClick={() => navigate("/auth")}
+                  >
+                    Sign In
+                  </Button>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -106,7 +177,7 @@ const Index = () => {
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             <Card
               className="shadow-card hover:shadow-card-hover transition-all cursor-pointer animate-slide-in"
-              onClick={() => navigate("/patient")}
+              onClick={() => user ? navigate("/patient") : navigate("/auth")}
             >
               <CardHeader className="text-center pb-8">
                 <div className="mx-auto h-16 w-16 rounded-full bg-primary/10 flex items-center justify-center mb-4">
@@ -139,7 +210,7 @@ const Index = () => {
 
             <Card
               className="shadow-card hover:shadow-card-hover transition-all cursor-pointer animate-slide-in [animation-delay:100ms]"
-              onClick={() => navigate("/doctor")}
+              onClick={() => user ? navigate("/doctor") : navigate("/auth")}
             >
               <CardHeader className="text-center pb-8">
                 <div className="mx-auto h-16 w-16 rounded-full bg-secondary/10 flex items-center justify-center mb-4">
@@ -172,7 +243,7 @@ const Index = () => {
 
             <Card
               className="shadow-card hover:shadow-card-hover transition-all cursor-pointer animate-slide-in [animation-delay:200ms]"
-              onClick={() => navigate("/admin")}
+              onClick={() => user ? navigate("/admin") : navigate("/auth")}
             >
               <CardHeader className="text-center pb-8">
                 <div className="mx-auto h-16 w-16 rounded-full bg-primary/10 flex items-center justify-center mb-4">
