@@ -101,7 +101,7 @@ const Index = () => {
                   <Button
                     size="lg"
                     variant="outline"
-                    className="text-lg px-8 border-white/30 text-white hover:bg-white/10"
+                    className="text-lg px-8 border-white/30 text-black hover:bg-white/10"
                     onClick={() => navigate("/auth")}
                   >
                     Sign In
