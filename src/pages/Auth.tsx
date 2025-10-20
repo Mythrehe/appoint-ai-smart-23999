@@ -149,7 +149,7 @@ const Auth = () => {
                       required
                     />
                   </div>
-                  <Button type="submit" className="w-full bg-gradient-primary" disabled={loading}>
+                  <Button type="submit" className="w-full bg-gradient-primary text-black hover:text-black" disabled={loading}>
                     {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                     Sign In
                   </Button>
@@ -202,7 +202,7 @@ const Auth = () => {
                       minLength={6}
                     />
                   </div>
-                  <Button type="submit" className="w-full bg-gradient-primary" disabled={loading}>
+                  <Button type="submit" className="w-full bg-gradient-primary text-black hover:text-black" disabled={loading}>
                     {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                     Create Account
                   </Button>
