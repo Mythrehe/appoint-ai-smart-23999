@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
-import { Heart, Loader2 } from "lucide-react";
+import { CalendarCheck, Loader2 } from "lucide-react";
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -107,7 +107,7 @@ const Auth = () => {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-white/10 rounded-full mb-4">
-            <Heart className="h-8 w-8 text-white" />
+            <CalendarCheck className="h-8 w-8 text-white" />
           </div>
           <h1 className="text-3xl font-bold text-white mb-2">ClinicScheduler</h1>
           <p className="text-white/80">Smart appointment scheduling for modern clinics</p>
